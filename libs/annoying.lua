@@ -26,14 +26,18 @@ local user_annoyances = {
         }
     }, -- Hash
     ["991846615675568128"] = {
+        chance = 100,
+
         choices = {
-            
+            {content = 'shut up'},
+            {content = "you're retarded"},
+            {content = "fuck off dumbass"},
+            {content = "im playing fortnite shut up"},
+            {content = "breakon can go suck himself"},
         }
     }, -- BreakBot
     ["1005429077332729856"] = {
-        choices = {
-            
-        }
+
     }, -- Gato bot
     ["563331892997521429"] = {
         chance = 40,
@@ -54,12 +58,14 @@ local user_annoyances = {
 
 local content_annoyances = {
 
-
+    gato = 'gato? where?'
 
 }
 
 function module.tryAnnoy(message, guild)
     local id = message.author.id
+    local messageContent = message.cleanContent
+
     local userAnnoyance = user_annoyances[id]
 
     for userId in pairs(message.mentionedUsers) do
@@ -73,7 +79,7 @@ function module.tryAnnoy(message, guild)
     if userAnnoyance then
         local chance = userAnnoyance.chance
 
-        if chance and math.random(0, 100) < chance * guild.annoyingScale then
+        if chance and math.random(0, 100) <= chance * guild.annoyingScale then
             local choices = userAnnoyance.choices
             local choice = choices[math.random(1, #choices)]
 
@@ -84,6 +90,14 @@ function module.tryAnnoy(message, guild)
                     reply(message, choice.content:format(message.author.name))
                 end
             end
+        end
+    end
+
+    for content, contentAnnoyance in pairs(content_annoyances) do
+        if messageContent:find(content) then
+            reply(message, contentAnnoyance)
+
+            break
         end
     end
 end

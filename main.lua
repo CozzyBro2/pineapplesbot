@@ -13,6 +13,7 @@ local client = discordia.Client()
 client:useSlashCommands()
 
 local command_require_format = 'commands/%s'
+local client_id
 
 local lavalinkNodes = {
 	{
@@ -45,10 +46,13 @@ end)
 client:on('ready', function()
     print('Logged in successfully')
 
+    client_id = client.user.id
     _G.voiceManager = lavalink.VoiceManager(client, lavalinkNodes)
 end)
 
 client:on('messageCreate', function(message)
+    if message.author.id == client_id then return end
+
     local guild = guildManager.new(message)
 
     if guild.beAnnoying then
