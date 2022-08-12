@@ -1,5 +1,8 @@
 local filesystem = require('fs')
 
+local annoying = require('annoying')
+local guildManager = require('guildManager')
+
 local discordia = require('discordia')
 local lavalink = require('discordia-lavalink')
 
@@ -20,21 +23,35 @@ local lavalinkNodes = {
 }
 
 client:on('slashCommandsReady', function()
+    print('Readying slash commands...')
+
     for _, command in pairs(client:getSlashCommands()) do
         command:delete()
     end
+
+    print('Cached slash commands removed.')
 
     for _, name in ipairs(filesystem.readdirSync('libs/commands')) do
         local commandInfo = require(command_require_format:format(name))
 
         client:slashCommand(commandInfo)
     end
+
+    print('Slash commands initialized & ready.')
 end)
 
 client:on('ready', function()
     print('Logged in successfully')
 
     _G.voiceManager = lavalink.VoiceManager(client, lavalinkNodes)
+end)
+
+client:on('messageCreate', function(message)
+    local guild = guildManager.new(message)
+
+    if guild.beAnnoying then
+        annoying.tryAnnoy(message, guild)
+    end
 end)
 
 local token, err = filesystem.readFileSync('.SECRET')

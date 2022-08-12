@@ -11,12 +11,12 @@ module.dm_permission = true
 local ping_format = 'Pong! Took %.2fms to reply.'
 
 function module.callback(interaction, params)
-    local currentTime = os.time()
+    local currentTime = os.time(os.date("!*t"))
     local sentTime = interaction.createdAt
 
-    local timeTaken = (currentTime - sentTime)
+    local timeTaken = (currentTime - sentTime) / 1000
 
-    interaction:reply(ping_format:format(timeTaken * 1000))
+    interaction:reply(ping_format:format(timeTaken))
 end
 
 return module

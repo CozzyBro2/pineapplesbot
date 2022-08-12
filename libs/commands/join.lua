@@ -1,6 +1,7 @@
 local module = {}
 
 local enums = require("discordia-slash").enums
+local guildManager = require('guildManager')
 
 module.name = 'join'
 module.description = 'Joins the specified voice channel. If ommitted, joins your channel.'
@@ -18,15 +19,16 @@ module.options = {
     },
 }
 
-function module.callback(interaction, params, command)
-    local channel = params.channel
+function module.callback(interaction, params)
+    local guild = guildManager.new(interaction)
+    local channel = params.channel or interaction.member.voiceChannel or interaction.guild:getChannel(guild.defaultVoice)
 
-    if not channel then
-        interaction:reply("Sure buddy, trying to join your voice channel", true)
-
-        channel = interaction.member.voiceChannel
+    if channel then
+        interaction:reply('Sure buddy, trying to join your voice channel...', true)
     else
-        interaction:reply("Sure buddy, trying to join that channel", true)
+        interaction:reply("Couldn't find that channel, or you're not in one.", true)
+
+        return
     end
 
     _G.voiceManager:join(channel)

@@ -25,6 +25,13 @@ local responses = {
 
     {format = 'I once pistol whipped a fagio named %s'},
 
+    {format = "%s can't go to the sea"},
+    {format = "Hey wanna hear a joke? %s."},
+
+    {format = function(user)
+        return string.format('%s MY BELOVED. I LOVE YOU 💖', user.name)
+    end},
+
 }
 
 local responses_len = #responses
