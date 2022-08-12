@@ -20,6 +20,10 @@ local lavalinkNodes = {
 }
 
 client:on('slashCommandsReady', function()
+    for _, command in pairs(client:getSlashCommands()) do
+        command:delete()
+    end
+
     for _, name in ipairs(filesystem.readdirSync('libs/commands')) do
         local commandInfo = require(command_require_format:format(name))
 
