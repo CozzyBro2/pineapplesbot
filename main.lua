@@ -30,9 +30,9 @@ client:on('slashCommandsReady', function()
     for _, command in pairs(client:getSlashCommands()) do
         command:delete()
     end
+    --]]
 
     print('Cached slash commands removed.')
-    --]]
 
     for _, name in ipairs(filesystem.readdirSync('libs/commands')) do
         local commandInfo = require(command_require_format:format(name))
