@@ -32,6 +32,7 @@ function module.callback(interaction, params)
     end
 
     _G.voiceManager:join(channel)
+    guild.player = _G.voiceManager:getPlayer(channel)
 end
 
 return module

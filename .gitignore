@@ -1,5 +1,6 @@
 # Anything secret
 .SECRET
+.SECRET2
 
 # Luvit stuff
 deps

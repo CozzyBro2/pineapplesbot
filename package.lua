@@ -9,6 +9,7 @@
     dependencies = {
       "SinisterRectus/discordia@2.9.2",
       "GitSparTV/discordia-slash",
+      --"Bilal2453/discordia-replies",
       --"Bilal2453/discordia-interactions",
       --"Bilal2453/discordia-components",
       --"JohnnyMorganz/discordia-lavalink",

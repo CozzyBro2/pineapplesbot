@@ -11,7 +11,7 @@ local guild_settings = {
 
     ["892450181809844275"] = {
         beAnnoying = true,
-        annoyingScale = 1.5,
+        annoyingScale = 1,
 
         defaultVoice = "1004199380334682183",
     },
