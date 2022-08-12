@@ -5,7 +5,7 @@ local enums = require("discordia-slash").enums
 module.name = 'pack'
 module.description = 'Roast tf out of some poor soul (real)'
 
-module.type = 1
+module.type = enums.optionType.subCommand
 module.dm_permission = false
 
 module.options = {

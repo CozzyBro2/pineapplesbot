@@ -11,7 +11,7 @@
       "GitSparTV/discordia-slash",
       --"Bilal2453/discordia-interactions",
       --"Bilal2453/discordia-components",
-      --"bilal2453/discordia-replies",
+      --"JohnnyMorganz/discordia-lavalink",
     },
     files = {
       "**.lua",
