@@ -1,0 +1,11 @@
+# Anything secret
+.SECRET
+
+# Luvit stuff
+deps
+
+# Discordia stuff
+*.log
+gateway.json
+
+# File types
