@@ -58,7 +58,8 @@ local user_annoyances = {
 
 local content_annoyances = {
 
-    gato = 'gato? where?'
+    gato = 'gato? where?',
+    fucking = 'chill im scared',
 
 }
 
