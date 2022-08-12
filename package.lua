@@ -5,7 +5,7 @@
     tags = { "discord", "discordia", "bot" },
     license = "The Unlicense",
     author = { name = "CozzyBro2", email = "gojinhan2@gmail.com" },
-    homepage = "https://github.com/pineapples-bot",
+    homepage = "https://github.com/pineapplesbot",
     dependencies = {
       "SinisterRectus/discordia@2.9.2"
     },
