@@ -46,7 +46,7 @@ local content_annoyances = {
     gato = {content = 'gato? where?', chance = 30},
     fucking = {content = 'chill im scared', chance = 50},
 
-    breakbot = {content = 'what a faggard', chance = 70},
+    ["break"] = {content = 'what a faggard', chance = 70},
     play = {content = 'IP: 10.0.0.1', chance = 40}
 
 }

@@ -28,6 +28,15 @@ client:on('slashCommandsReady', function()
 
     for _, name in ipairs(filesystem.readdirSync('libs/commands')) do
         local commandInfo = require(command_require_format:format(name))
+        local callback = commandInfo.callback
+
+        commandInfo.callback = function(interaction, ...)
+            local success, err = pcall(callback, interaction, ...)
+
+            if not success then
+                interaction:reply("Command errored, here's the error: " .. err, true)
+            end
+        end
 
         client:slashCommand(commandInfo)
     end
