@@ -5,28 +5,18 @@ local reply = require('discordia-replies').reply
 local user_annoyances = {
 
     ["110920376619368448"] = {
-        chance = 8,
+        chance = 10,
 
         choices = {
 
             {isReaction = true, content = '💀'},
             {isReaction = true, content = '🤓'},
 
-            {content = 'malding?'},
-            {content = 'bruh'},
-            {content = 'garbage take'},
-            {content = 'your bot sucks'},
-            {content = 'you suck'},
-
         }
     }, -- Break
-    ["325106358460612608"] = {
-        choices = {
-            {isReaction = true, content = ''}
-        }
-    }, -- Hash
+
     ["991846615675568128"] = {
-        chance = 100,
+        chance = 1,
 
         choices = {
             {content = 'shut up'},
@@ -36,11 +26,9 @@ local user_annoyances = {
             {content = "breakon can go suck himself"},
         }
     }, -- BreakBot
-    ["1005429077332729856"] = {
 
-    }, -- Gato bot
     ["563331892997521429"] = {
-        chance = 40,
+        chance = 20,
 
         choices = {
             {isReaction = true, content = '👍'},
@@ -48,9 +36,6 @@ local user_annoyances = {
             {isReaction = true, content = '✅'},
             {isReaction = true, content = '🥵️'},
             {isReaction = true, content = '👌'},
-
-            {content = 'love you babe..'},
-            {content = 'yeaj,,..'},
         }
     }, -- Elite engy
 
@@ -58,8 +43,11 @@ local user_annoyances = {
 
 local content_annoyances = {
 
-    gato = 'gato? where?',
-    fucking = 'chill im scared',
+    gato = {content = 'gato? where?', chance = 30},
+    fucking = {content = 'chill im scared', chance = 50},
+
+    breakbot = {content = 'what a faggard', chance = 70},
+    play = {content = 'IP: 10.0.0.1', chance = 40}
 
 }
 
@@ -95,8 +83,10 @@ function module.tryAnnoy(message, guild)
     end
 
     for content, contentAnnoyance in pairs(content_annoyances) do
-        if messageContent:find(content) then
-            reply(message, contentAnnoyance)
+        local chance = contentAnnoyance.chance
+
+        if messageContent:find(content) and chance and math.random(0, 100) <= chance * guild.annoyingScale then
+            reply(message, contentAnnoyance.content)
 
             break
         end
