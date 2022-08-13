@@ -14,12 +14,16 @@ function module.callback(interaction)
     local channel = interaction.guild.me.voiceChannel
 
     if not channel then
-        interaction:reply("Dawg u aint in a channel", true)
+        interaction:update("Dawg u aint in a channel", true)
+
+        return
     else
-        interaction:reply("Sure buddy, leaving my current channel", true)
+        interaction:update("Sure buddy, leaving my current channel")
     end
 
     guild.inVoice = false
+    guild.queue:Destroy()
+
     _G.voiceManager:leave(channel)
 end
 

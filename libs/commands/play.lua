@@ -38,7 +38,7 @@ function module.callback(interaction, params)
     local queue = guild.queue
 
     if not guild.inVoice then
-        error("I'm not in a voice channel.", 0)
+        require('commands/join').callback(interaction, params)
     end
 
     local startTime = luv.hrtime()
@@ -66,7 +66,7 @@ function module.callback(interaction, params)
 
             local timeTaken = (luv.hrtime() - startTime) / 1e9
 
-            interaction:reply(audio_fetched_format:format(info.title, timeTaken))
+            interaction:update(audio_fetched_format:format(info.title, timeTaken))
         else
             error(string.format("No results for '**%s**'", rawQuery), 0)
         end

@@ -20,11 +20,18 @@ function module:_StartQueue()
 end
 
 function module:_StopQueue()
-
+    self._playing = false
+    self._player:stop()
 end
 
 function module:_AdvanceQueue()
     self.index, self.value = next(self._queue, self.index)
+
+    if not self.value then
+        self:_StopQueue()
+
+        return
+    end
 
     local trackInfo = self.value
     local player = self._player
@@ -32,7 +39,9 @@ function module:_AdvanceQueue()
     player:play(trackInfo._queueTrack)
 
     player:on('end', function()
+        if not self._playing then return end
 
+        self:_AdvanceQueue()
     end)
 end
 
@@ -52,6 +61,18 @@ function module:Remove(position)
     end
 
     table.remove(queue, position)
+end
+
+function module:Destroy()
+    self:_StopQueue()
+
+    setmetatable(self, nil)
+
+    for key in pairs(self) do
+        self[key] = nil
+    end
+
+    self = nil
 end
 
 return module

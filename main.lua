@@ -40,10 +40,12 @@ client:on('slashCommandsReady', function()
         local callback = command.callback
 
         command.callback = function(interaction, ...)
+            interaction:reply('Working..')
+
             local success, err = pcall(callback, interaction, ...)
 
             if not success then
-                interaction:reply("Command errored, here's the error:\n" .. err, true)
+                interaction:update("Command errored, here's the error:\n" .. err, true)
             end
         end
 
