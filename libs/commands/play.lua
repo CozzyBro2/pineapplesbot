@@ -34,12 +34,12 @@ module.options = {
 }
 
 function module.callback(interaction, params)
-    local guild = guildManager.new(interaction)
-    local queue = guild.queue
-
-    if not guild.inVoice then
+    if not interaction.guild.me.voiceChannel then
         require('commands/join').callback(interaction, params)
     end
+
+    local guild = guildManager.new(interaction)
+    local queue = guild.queue
 
     local startTime = luv.hrtime()
 
