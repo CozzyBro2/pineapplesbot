@@ -1,9 +1,13 @@
 local module = {}
 
+local luv = require('uv')
+local parse = require('url').parse
+
 local enums = require("discordia-slash").enums
 local guildManager = require('guildManager')
 
 local search_format = '%s:%s'
+local audio_fetched_format = "Added **'%s'** to the queue, took **%.2f**s"
 
 module.name = 'play'
 module.description = "Add stuff to queue"
@@ -37,19 +41,32 @@ function module.callback(interaction, params)
         error("I'm not in a voice channel.", 0)
     end
 
+    local startTime = luv.hrtime()
+
     local rawQuery = params.song
     local searcher = params.searcher or 'ytsearch'
 
-    local query = search_format:format(searcher, rawQuery)
-    local trackInfo = _G.voiceManager.api:get(query)
+    local query = rawQuery
 
-    if trackInfo then
-        local tracks = trackInfo.tracks
+    if not parse(rawQuery).protocol then
+        query = search_format:format(searcher, rawQuery)
+    end
+
+    local tracksInfo = _G.voiceManager.api:get(query)
+
+    if tracksInfo then
+        local tracks = tracksInfo.tracks
 
         if tracks and #tracks > 0 then
-            trackInfo._queueTrack = tracks[1].track
+            local track = tracks[1]
+            local info = track.info
 
-            queue:Add(trackInfo)
+            tracksInfo._queueTrack = track.track
+            queue:Add(tracksInfo)
+
+            local timeTaken = (luv.hrtime() - startTime) / 1e9
+
+            interaction:reply(audio_fetched_format:format(info.title, timeTaken))
         else
             error(string.format("No results for '**%s**'", rawQuery), 0)
         end

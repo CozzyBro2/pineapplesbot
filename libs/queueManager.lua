@@ -32,7 +32,7 @@ function module:_AdvanceQueue()
     player:play(trackInfo._queueTrack)
 
     player:on('end', function()
-   
+
     end)
 end
 
