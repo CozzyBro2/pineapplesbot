@@ -1,8 +1,6 @@
 local module = {}
 module.__index = module
 
-local queueManager = require('queueManager')
-
 local guild_settings = {
     default = {
         beAnnoying = false,
@@ -40,8 +38,6 @@ function module.new(interaction)
     if overrides then
         copy(overrides, guild)
     end
-
-    guild.queue = queueManager.new(guild)
 
     guilds[guildId] = guild
     return guild

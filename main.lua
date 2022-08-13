@@ -1,6 +1,7 @@
 local filesystem = require('fs')
-
 local annoying = require('annoying')
+
+local commandMap = require('commandMap')
 local guildManager = require('guildManager')
 
 local discordia = require('discordia')
@@ -12,9 +13,6 @@ slash.constructor()
 local client = discordia.Client()
 client:useSlashCommands()
 
-local command_require_format = 'commands/%s'
-local client_id
-
 local lavalinkNodes = {
 	{
         host = '127.0.0.1',
@@ -23,22 +21,33 @@ local lavalinkNodes = {
     }
 }
 
+local client_id
+
 client:on('slashCommandsReady', function()
     print('Readying slash commands...')
 
-    for _, name in ipairs(filesystem.readdirSync('libs/commands')) do
-        local commandInfo = require(command_require_format:format(name))
-        local callback = commandInfo.callback
+    for _, existingCommand in pairs(client:getSlashCommands()) do
+        local name = existingCommand.name
 
-        commandInfo.callback = function(interaction, ...)
+        if not commandMap[name] then
+            existingCommand:delete()
+
+            print('discarding obsolete command: ' .. name)
+        end
+    end
+
+    for _, command in pairs(commandMap) do
+        local callback = command.callback
+
+        command.callback = function(interaction, ...)
             local success, err = pcall(callback, interaction, ...)
 
             if not success then
-                interaction:reply("Command errored, here's the error: " .. err, true)
+                interaction:reply("Command errored, here's the error:\n" .. err, true)
             end
         end
 
-        client:slashCommand(commandInfo)
+        client:slashCommand(command)
     end
 
     print('Slash commands initialized & ready.')

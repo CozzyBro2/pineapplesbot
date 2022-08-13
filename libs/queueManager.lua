@@ -8,20 +8,23 @@ function module.new(guild)
 
     queueObject._queue = {}
     queueObject._player = guild.player
-    queueObject._iterator = ipairs(queueObject._queue)
 
     return queueObject
 end
 
-function module:StartQueue()
+function module:_StartQueue()
     if self._playing then return end
     self._playing = true
 
-    self:AdvanceQueue()
+    self:_AdvanceQueue()
 end
 
-function module:AdvanceQueue()
-    self.index, self.value = self._iterator(self._queue, self.index)
+function module:_StopQueue()
+
+end
+
+function module:_AdvanceQueue()
+    self.index, self.value = next(self._queue, self.index)
 
     local trackInfo = self.value
     local player = self._player
@@ -29,16 +32,16 @@ function module:AdvanceQueue()
     player:play(trackInfo._queueTrack)
 
     player:on('end', function()
-        print('test')
+   
     end)
 end
 
 function module:Add(trackInfo)
-    if not self._playing then
-        self:StartQueue()
-    end
-
     table.insert(self._queue, trackInfo)
+
+    if not self._playing then
+        self:_StartQueue()
+    end
 end
 
 function module:Remove(position)

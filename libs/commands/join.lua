@@ -1,6 +1,8 @@
 local module = {}
 
 local enums = require("discordia-slash").enums
+
+local queueManager = require('queueManager')
 local guildManager = require('guildManager')
 
 module.name = 'join'
@@ -32,7 +34,11 @@ function module.callback(interaction, params)
     end
 
     _G.voiceManager:join(channel)
+
     guild.player = _G.voiceManager:getPlayer(channel)
+    guild.queue = queueManager.new(guild)
+
+    guild.inVoice = true
 end
 
 return module
