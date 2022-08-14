@@ -30,9 +30,7 @@ function module.callback(interaction, params)
     end
 
     if not channel then
-        interaction:reply("Couldn't find that channel, or you're not in one.")
-
-        return
+        error("Couldn't find that channel, or you're not in one.", 0)
     end
 
     _G.voiceManager:join(channel)
@@ -41,8 +39,6 @@ function module.callback(interaction, params)
     guild.queue = queueManager.new(guild)
 
     guild.inVoice = true
-
-    interaction:reply('Sure buddy, tried to leave your voice channel.')
 end
 
 return module
