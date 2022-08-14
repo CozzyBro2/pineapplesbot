@@ -66,7 +66,7 @@ function module.callback(interaction, params)
 
             local timeTaken = (luv.hrtime() - startTime) / 1e9
 
-            interaction:update(audio_fetched_format:format(info.title, timeTaken))
+            interaction:reply(audio_fetched_format:format(info.title, timeTaken))
         else
             error(string.format("No results for '**%s**'", rawQuery), 0)
         end

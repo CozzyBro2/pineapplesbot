@@ -16,7 +16,7 @@ function module.callback(interaction, params)
 
     local timeTaken = (currentTime - sentTime) / 1000
 
-    interaction:update(ping_format:format(timeTaken))
+    interaction:reply(ping_format:format(timeTaken))
 end
 
 return module

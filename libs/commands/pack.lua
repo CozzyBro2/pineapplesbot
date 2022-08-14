@@ -48,7 +48,7 @@ function module.callback(interaction, params)
         output = format(params.user) or 'i got nothin'
     end
 
-    interaction:update(output)
+    interaction:reply(output)
 end
 
 return module

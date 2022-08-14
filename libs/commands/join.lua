@@ -29,10 +29,8 @@ function module.callback(interaction, params)
         require('commands/leave').callback(interaction)
     end
 
-    if channel then
-        interaction:update('Sure buddy, trying to join your voice channel...')
-    else
-        interaction:update("Couldn't find that channel, or you're not in one.")
+    if not channel then
+        interaction:reply("Couldn't find that channel, or you're not in one.")
 
         return
     end
@@ -43,6 +41,8 @@ function module.callback(interaction, params)
     guild.queue = queueManager.new(guild)
 
     guild.inVoice = true
+
+    interaction:reply('Sure buddy, tried to leave your voice channel.')
 end
 
 return module

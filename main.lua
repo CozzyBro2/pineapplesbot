@@ -1,10 +1,11 @@
 local filesystem = require('fs')
-local annoying = require('annoying')
 
 local commandMap = require('commandMap')
 local guildManager = require('guildManager')
 
+local annoying = require('annoying')
 local discordia = require('discordia')
+
 local lavalink = require('discordia-lavalink')
 
 local slash = require('discordia-slash')
@@ -40,12 +41,10 @@ client:on('slashCommandsReady', function()
         local callback = command.callback
 
         command.callback = function(interaction, ...)
-            interaction:reply('Working..')
-
             local success, err = pcall(callback, interaction, ...)
 
             if not success then
-                interaction:update("Command errored, here's the error:\n" .. err, true)
+                interaction:reply("Command errored, here's the error:\n" .. err)
             end
         end
 
