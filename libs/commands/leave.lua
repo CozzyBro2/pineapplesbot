@@ -14,7 +14,7 @@ function module.callback(interaction)
     local channel = interaction.guild.me.voiceChannel
 
     if not channel then
-        error("Dawg u aint in a channel", 0)
+        error("I'm not in a channel", 0)
     end
 
     guild.inVoice = false

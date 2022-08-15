@@ -7,9 +7,7 @@ local enums = require("discordia-slash").enums
 local guildManager = require('guildManager')
 
 local search_format = '%s:%s'
-local downloaded_feedback_format = '[%s](%s)'
-
-local audio_fetched_format = "Added **'%s'** to the queue, took **%.2f**s"
+--local audio_fetched_format = "Added **'%s'** to the queue, took **%.2f**s"
 
 module.name = 'play'
 module.description = "Add stuff to queue"
@@ -42,6 +40,10 @@ function module.callback(interaction, params)
 
     local guild = guildManager.new(interaction)
     local queue = guild.queue
+
+    if not queue then
+        error("I've been told to join, but my queue hasn't been activated, try kicking me from the vc.", 0)
+    end
 
     local startTime = luv.hrtime()
 
@@ -87,12 +89,12 @@ function module.callback(interaction, params)
                     fields = {
                         {
                             name = 'Is a stream',
-                            value = info.isStream,
+                            value = tostring(info.isStream),
                         },
 
                         {
                             name = 'Time taken:',
-                            value = timeTaken
+                            value = tostring(timeTaken)
                         }
                     },
                     author = {
