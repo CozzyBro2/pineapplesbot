@@ -41,6 +41,7 @@ function module:_AdvanceQueue()
     player:on('end', function()
         if not self._playing then return end
 
+        self:Remove(self.index)
         self:_AdvanceQueue()
     end)
 end

@@ -18,9 +18,14 @@ function module.callback(interaction)
     end
 
     guild.inVoice = false
-    guild.queue:Destroy()
+
+    -- in the event the bot was in the vc and join wasn't called (i.e bot powercycle)
+    if guild.queue then
+        guild.queue:Destroy()
+    end
 
     _G.voiceManager:leave(channel)
+    interaction:reply('Tried leaving my voice channel.')
 end
 
 return module

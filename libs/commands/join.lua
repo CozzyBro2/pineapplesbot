@@ -25,12 +25,12 @@ function module.callback(interaction, params)
     local guild = guildManager.new(interaction)
     local channel = params.channel or interaction.member.voiceChannel or interaction.guild:getChannel(guild.defaultVoice)
 
-    if interaction.guild.me.voiceChannel then
-        require('commands/leave').callback(interaction)
-    end
-
     if not channel then
         error("Couldn't find that channel, or you're not in one.", 0)
+    end
+
+    if interaction.guild.me.voiceChannel then
+        require('commands/leave').callback(interaction)
     end
 
     _G.voiceManager:join(channel)
@@ -39,6 +39,8 @@ function module.callback(interaction, params)
     guild.queue = queueManager.new(guild)
 
     guild.inVoice = true
+
+    interaction:reply('Tried joining your voice channel.')
 end
 
 return module

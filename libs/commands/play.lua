@@ -7,6 +7,8 @@ local enums = require("discordia-slash").enums
 local guildManager = require('guildManager')
 
 local search_format = '%s:%s'
+local downloaded_feedback_format = '[%s](%s)'
+
 local audio_fetched_format = "Added **'%s'** to the queue, took **%.2f**s"
 
 module.name = 'play'
@@ -66,7 +68,40 @@ function module.callback(interaction, params)
 
             local timeTaken = (luv.hrtime() - startTime) / 1e9
 
-            interaction:reply(audio_fetched_format:format(info.title, timeTaken))
+            --interaction:reply(audio_fetched_format:format(downloaded_feedback_format:format(info.title, info.url), timeTaken))
+            interaction:reply {
+                embed = {
+                    title = info.title,
+                    description = 'Audio added to queue.',
+                    url = info.url,
+
+                    video = {
+                        url = info.url,
+                        height = 480,
+                        width = 640,
+                    },
+
+                    provider = {
+                        name = info.sourceName,
+                    },
+                    fields = {
+                        {
+                            name = 'Is a stream',
+                            value = info.isStream,
+                        },
+
+                        {
+                            name = 'Time taken:',
+                            value = timeTaken
+                        }
+                    },
+                    author = {
+                        name = info.author,
+                    },
+
+                    color = 0x00ff00,
+                }
+            }--]]
         else
             error(string.format("No results for '**%s**'", rawQuery), 0)
         end
