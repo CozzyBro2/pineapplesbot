@@ -22,6 +22,7 @@ local lavalinkNodes = {
     }
 }
 
+_G.botClient = client
 local client_id
 
 client:on('slashCommandsReady', function()
@@ -44,7 +45,7 @@ client:on('slashCommandsReady', function()
             local success, err = pcall(callback, interaction, ...)
 
             if not success then
-                interaction:reply("Command errored, here's the error:\n" .. err)
+                interaction:reply("Command errored, here's the error:\n" .. err, true)
             end
         end
 
@@ -52,6 +53,7 @@ client:on('slashCommandsReady', function()
     end
 
     print('Slash commands initialized & ready.')
+    require('cli-prompt').init()
 end)
 
 client:on('ready', function()

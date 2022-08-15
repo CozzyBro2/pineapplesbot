@@ -7,6 +7,7 @@ function module.new(guild)
     local queueObject = setmetatable({}, module)
 
     queueObject._queue = {}
+    queueObject._real = guild._real
     queueObject._player = guild.player
 
     return queueObject
@@ -25,23 +26,25 @@ function module:_StopQueue()
 end
 
 function module:_AdvanceQueue()
-    self.index, self.value = next(self._queue, self.index)
+    print(self._index)
+    local index, trackInfo = next(self._queue, self.index)
 
-    if not self.value then
+    self.index = index
+    self.value = trackInfo
+
+    if not trackInfo then
         self:_StopQueue()
 
         return
     end
 
-    local trackInfo = self.value
     local player = self._player
-
     player:play(trackInfo._queueTrack)
 
     player:on('end', function()
         if not self._playing then return end
-
-        self:Remove(self.index)
+        print(index, trackInfo)
+        self:Remove(index)
         self:_AdvanceQueue()
     end)
 end

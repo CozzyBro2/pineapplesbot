@@ -40,7 +40,7 @@ function module.callback(interaction, params)
 
     guild.inVoice = true
 
-    interaction:reply('Tried joining your voice channel.')
+    interaction:reply('Tried joining your voice channel.', true)
 end
 
 return module

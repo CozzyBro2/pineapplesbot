@@ -25,7 +25,7 @@ function module.callback(interaction)
     end
 
     _G.voiceManager:leave(channel)
-    interaction:reply('Tried leaving my voice channel.')
+    interaction:reply('Tried leaving my voice channel.', true)
 end
 
 return module

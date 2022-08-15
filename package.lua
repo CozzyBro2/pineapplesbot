@@ -7,6 +7,7 @@
     author = { name = "CozzyBro2", email = "gojinhan2@gmail.com" },
     homepage = "https://github.com/pineapplesbot",
     dependencies = {
+      "creationix/prompt",
       "SinisterRectus/discordia@2.9.2",
       "GitSparTV/discordia-slash",
       --"Bilal2453/discordia-replies",

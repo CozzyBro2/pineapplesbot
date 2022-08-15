@@ -23,7 +23,9 @@ local function copy(input, output)
 end
 
 function module.new(interaction)
-    local guildId = interaction.guild.id
+    local realGuild = interaction.guild
+    local guildId = realGuild.id
+
     local existing = guilds[guildId]
 
     if existing then
@@ -39,7 +41,9 @@ function module.new(interaction)
         copy(overrides, guild)
     end
 
+    guild._real = realGuild
     guilds[guildId] = guild
+
     return guild
 end
 
