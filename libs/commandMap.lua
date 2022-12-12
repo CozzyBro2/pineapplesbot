@@ -7,5 +7,6 @@ return {
     ping = require('commands/ping'),
 
     play = require('commands/play'),
+    server = require('commands/minecraft-server'),
 
 }

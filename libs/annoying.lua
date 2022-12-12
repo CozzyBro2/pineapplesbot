@@ -5,12 +5,14 @@ local reply = require('discordia-replies').reply
 local user_annoyances = {
 
     ["110920376619368448"] = {
-        chance = 10,
+        chance = 5,
 
         choices = {
 
             {isReaction = true, content = '💀'},
             {isReaction = true, content = '🤓'},
+	    {isReaction = true, content = '😂'},
+	    {isReaction = true, content = '😱'},
 
         }
     }, -- Break
@@ -19,11 +21,11 @@ local user_annoyances = {
         chance = 1,
 
         choices = {
-            {content = 'shut up'},
-            {content = "you're retarded"},
-            {content = "fuck off dumbass"},
-            {content = "im playing fortnite shut up"},
-            {content = "breakon can go suck himself"},
+            --{content = 'shut up'},
+            --{content = "you're retarded"},
+            --{content = "fuck off dumbass"},
+            --{content = "im playing fortnite shut up"},
+            --{content = "breakon can go suck himself"},
         }
     }, -- BreakBot
 
@@ -43,11 +45,11 @@ local user_annoyances = {
 
 local content_annoyances = {
 
-    gato = {content = 'gato? where?', chance = 30},
-    fucking = {content = 'chill im scared', chance = 50},
+    gato = {content = 'gato? where?', chance = 3},
+    fucking = {content = 'chill im scared', chance = 5},
 
-    ["break"] = {content = 'what a faggard', chance = 70},
-    play = {content = 'IP: 10.0.0.1', chance = 40}
+    ["break"] = {content = 'what a faggard', chance = 7},
+    play = {content = 'IP: 10.0.0.1', chance = 4}
 
 }
 
@@ -58,11 +60,13 @@ function module.tryAnnoy(message, guild)
     local userAnnoyance = user_annoyances[id]
 
     for userId in pairs(message.mentionedUsers) do
-        if userId == '1007455271968317481' then
+        --[[
+	if userId == '1007455271968317481' then
             reply(message, 'FUCK OFF')
 
             break
         end
+	--]]
     end
 
     if userAnnoyance then
